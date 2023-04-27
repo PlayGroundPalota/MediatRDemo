@@ -3,6 +3,7 @@ using System.Reflection;
 using MediatR;
 using SingleSignOnRefactor.DataAccess;
 using SingleSignOnRefactor.DataContext;
+using SingleSignOnRefactor.Helpers;
 using SingleSignOnRefactor.Repository;
 
 namespace SingleSignOnRefactor.Startup
@@ -12,6 +13,7 @@ namespace SingleSignOnRefactor.Startup
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(typeof(Mapping));
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
