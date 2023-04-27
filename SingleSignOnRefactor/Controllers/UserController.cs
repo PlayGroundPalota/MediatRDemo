@@ -27,13 +27,13 @@ namespace SingleSignOnRefactor.Controllers
         }
         // GET: /<controller>/
         [HttpGet(Name = "GetUsersList")]
-        public async Task<IEnumerable<SingleSignOnDTO>> Get()
+        public async Task<IEnumerable<QueryUserResponse>> Get()
         {
             return await _mediator.Send(new GetUsersQuery());
 
         }
         [HttpPost(Name = "InsertUser")]
-        public async Task Post(SingleSignOnUserModel model)
+        public async Task Post(CreateUserRequest model)
         {
             await _mediator.Send(new CreateUserCommand(model));
         }
