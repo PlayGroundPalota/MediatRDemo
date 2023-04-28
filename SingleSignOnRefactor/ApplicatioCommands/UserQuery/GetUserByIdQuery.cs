@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoMapper;
-using FluentValidation;
 using MediatR;
 using SingleSignOnRefactor.Helpers;
 using SingleSignOnRefactor.Models;
