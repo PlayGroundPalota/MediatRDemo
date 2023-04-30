@@ -29,18 +29,18 @@ namespace SingleSignOnRefactor.Repository
 
         public async Task<IEnumerable<SingleSignOnDTO>> GetUsers()
         {
-            return await _access.LoadData<SingleSignOnDTO, dynamic>(storedProcedure: "storedProcedure", new { });
+            return await _access.LoadData<SingleSignOnDTO, dynamic>(storedProcedure: "GetUserList", new { });
         }
 
 
         public async Task InsertUser(SingleSignOnUserModel user) =>
 
-            await _access.SaveData(storedProcedure: "storedProcedure",
+            await _access.SaveData(storedProcedure: "InsertUser",
                 new
                 {
                     LastName = user.LastName,
                     FirstName = user.FirstName,
-                    AzureUserId = Guid.NewGuid()
+                    AzureId = Guid.NewGuid().ToString()
                 });
 
 
@@ -48,7 +48,7 @@ namespace SingleSignOnRefactor.Repository
               await _access.SaveData(storedProcedure: "storedProcedure",
                 new
                 {
-                    Id = user.Id,
+                    Id = user.UserId,
                     LastName = user.LastName,
                     FirstName = user.FirstName,
                     AzureUserId = user.AzureId

@@ -20,6 +20,8 @@ namespace SingleSignOnRefactor.Startup
             services.AddSingleton<IDapperContext>(dapper => new DapperContext(configuration));
             services.AddTransient<ISingleSignOnUserRepository, SingleSignOnUserRepository>();
             services.AddTransient<IDataAccessEngine, DataAccessEngine>();
+
+            services.AddHttpsRedirection(options => options.HttpsPort = 8000);
             return services;
         }
     }
