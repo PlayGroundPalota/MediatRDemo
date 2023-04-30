@@ -3,8 +3,8 @@
 
 - Docker Containers (MySql and .Net Core API)
 - MediatR Pattern.
--Repository Pattern using Dapper ORM 
--Command and Query Responsibility Segregation (CQRS)
+- Repository Pattern using Dapper ORM 
+- Command and Query Responsibility Segregation (CQRS)
 
 ### Some features will be added to this application in future.
 
