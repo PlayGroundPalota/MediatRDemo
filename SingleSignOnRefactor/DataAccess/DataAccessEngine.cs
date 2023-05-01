@@ -20,7 +20,13 @@ namespace SingleSignOnRefactor.DataAccess
                 return await connection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
             }
         }
-
+        public async Task<T> Get<T, U>(string storedProcedure, U parameters)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                return await connection.QueryFirstOrDefaultAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+            }
+        }
         public async Task SaveData<T>(string storedProcedure, T parameters)
         {
             using (var connection = _dapperContext.CreateConnection())
@@ -30,4 +36,6 @@ namespace SingleSignOnRefactor.DataAccess
         }
     }
 }
+
+
 

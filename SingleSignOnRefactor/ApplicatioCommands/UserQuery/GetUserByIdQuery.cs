@@ -35,7 +35,7 @@ namespace SingleSignOnRefactor.ApplicatioCommands.UserQuery
                     throw new EntityNotFoundException($"User with ID {UserId} not found");
                 }
 
-                return _mapper.Map<QueryUserResponse>(await _singleSignOnUserRepository.GetUser(UserId));
+                return _mapper.Map<QueryUserResponse>(user);
             }
         }
     }

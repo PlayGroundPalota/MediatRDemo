@@ -12,15 +12,16 @@ namespace SingleSignOnRefactor.Startup
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddMemoryCache();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(typeof(Mapping));
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddScoped<SingleSignOnUserRepository>();
+            services.AddScoped<ISingleSignOnUserRepository, CacheUsersRepository>();
             services.AddSingleton<IDapperContext>(dapper => new DapperContext(configuration));
-            services.AddTransient<ISingleSignOnUserRepository, SingleSignOnUserRepository>();
             services.AddTransient<IDataAccessEngine, DataAccessEngine>();
-
             services.AddHttpsRedirection(options => options.HttpsPort = 8000);
             return services;
         }
