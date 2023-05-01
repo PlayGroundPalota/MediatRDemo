@@ -31,22 +31,16 @@ namespace SingleSignOnRefactor.Repository
 
         public async Task<IEnumerable<SingleSignOnDTO>> GetUsers()
         {
-            return (IEnumerable<SingleSignOnDTO>)_memoryCache.GetOrCreateAsync("user-list", async entry =>
+            return await _memoryCache.GetOrCreateAsync("user-list", async entry =>
             {
                 entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
                 return await _decorated.GetUsers();
-            });
+            }) ?? Enumerable.Empty<SingleSignOnDTO>();
         }
 
-        public Task InsertUser(SingleSignOnUserModel user)
-        {
-            throw new NotImplementedException();
-        }
+        public Task InsertUser(SingleSignOnUserModel user) => _decorated.InsertUser(user);
 
-        public Task UpdateUser(SingleSignOnDTO user)
-        {
-            throw new NotImplementedException();
-        }
+        public Task UpdateUser(SingleSignOnDTO user) => _decorated.UpdateUser(user);
     }
 }
 
