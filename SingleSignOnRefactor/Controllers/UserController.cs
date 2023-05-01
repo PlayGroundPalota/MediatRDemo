@@ -25,17 +25,25 @@ namespace SingleSignOnRefactor.Controllers
         {
             _mediator = mediator;
         }
-        // GET: /<controller>/
-        [HttpGet(Name = "GetUsersList")]
-        public async Task<IEnumerable<QueryUserResponse>> Get()
-        {
-            return await _mediator.Send(new GetUsersQuery());
 
-        }
         [HttpPost(Name = "InsertUser")]
         public async Task Post(CreateUserRequest model)
         {
             await _mediator.Send(new CreateUserCommand(model));
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            var user = await _mediator.Send(new GetUserByIdQuery(id));
+            return Ok(user);
+        }
+
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var list = await _mediator.Send(new GetUsersQuery());
+            return Ok(list);
         }
     }
 }

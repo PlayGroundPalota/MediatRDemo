@@ -10,6 +10,7 @@ namespace SingleSignOnRefactor.Repository
         Task<IEnumerable<SingleSignOnDTO>> GetUsers();
         Task InsertUser(SingleSignOnUserModel user);
         Task UpdateUser(SingleSignOnDTO user);
+
     }
 }
 

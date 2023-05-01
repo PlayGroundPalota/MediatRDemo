@@ -1,4 +1,6 @@
 ﻿using System;
+using Dapper;
+using System.Data;
 using SingleSignOnRefactor.DataAccess;
 using SingleSignOnRefactor.DataContext;
 using SingleSignOnRefactor.Models;
@@ -16,20 +18,21 @@ namespace SingleSignOnRefactor.Repository
 
         public async Task DeleteUser(int id)
         {
-            await _access.SaveData("storedProcedure", new { UserId = id });
+            await _access.SaveData("storedProcedure",
+                new { UserId = id });
         }
 
         public async Task<SingleSignOnDTO?> GetUser(int id)
         {
-            var results = await _access.LoadData<SingleSignOnDTO, dynamic>(
-            "GetSSOUserByLegacyId",
-            new { Id = id });
-            return results.FirstOrDefault();
+
+            return await _access.Get<SingleSignOnDTO, dynamic>(
+            "getUserById", new { UserId = id });
         }
 
         public async Task<IEnumerable<SingleSignOnDTO>> GetUsers()
         {
-            return await _access.LoadData<SingleSignOnDTO, dynamic>(storedProcedure: "GetUserList", new { });
+            return await _access.LoadData<SingleSignOnDTO,
+                dynamic>(storedProcedure: "GetUserList", new { });
         }
 
 
@@ -53,6 +56,10 @@ namespace SingleSignOnRefactor.Repository
                     FirstName = user.FirstName,
                     AzureUserId = user.AzureId
                 });
+
+        private async Task<int> GetTotalRecordsCount() =>
+            (await _access.LoadData<int,
+                dynamic>(storedProcedure: "GetUserListCount", new { })).Count();
 
     }
 }
